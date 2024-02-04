@@ -21,7 +21,6 @@ def answer_question(question: str) -> str:
         chain_type="stuff"
     )
 
-    # TODO: Use chain.invoke instead of chain.run
-    result = chain.run(question)
+    output = chain.invoke({"query": question})
 
-    return result
+    return output["result"]
