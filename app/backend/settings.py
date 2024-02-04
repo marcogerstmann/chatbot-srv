@@ -8,6 +8,9 @@ class Settings(BaseSettings):
     )
 
     openai_api_key: str
+    pinecone_api_key: str
+    pinecone_env_name: str
+    pinecone_index_name: str
 
 
 settings = Settings()
