@@ -8,10 +8,12 @@ class Settings(BaseSettings):
     )
 
     openai_api_key: str
-    google_cloud_api_key: str
     pinecone_api_key: str
     pinecone_env_name: str
     pinecone_index_name: str
+    google_cloud_api_key: str
+    google_service_account_email: str
+    google_service_account_private_key: str
 
 
 settings = Settings()
