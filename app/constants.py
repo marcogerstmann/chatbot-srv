@@ -9,4 +9,4 @@ MIN_SOLAR_API_IMAGE_QUALITY: Final = "MEDIUM"  # "LOW" | "MEDIUM" | "HIGH"
 
 # Solar potential calculations
 DC_TO_AC_RATE = 0.85
-AVG_COST_PER_KWH = 0.26
+AVG_COST_PER_KWH = 0.26  # TODO: Move to database or external api, because it changes more frequently
