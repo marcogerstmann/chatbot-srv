@@ -1,4 +1,4 @@
-# pv-chatbot-srv
+# Solar Chatbot Service
 
 ## Initialize project
 
