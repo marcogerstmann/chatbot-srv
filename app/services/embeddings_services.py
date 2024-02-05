@@ -1,7 +1,7 @@
 from langchain.text_splitter import CharacterTextSplitter
 from langchain_community.document_loaders import TextLoader
 
-from app.backend.vector_stores.pinecone import vector_store
+from app.backend.vector_stores.pinecone_vector_store import vector_store
 
 
 def create_embeddings() -> bool:

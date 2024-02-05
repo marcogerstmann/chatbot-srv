@@ -1,7 +1,7 @@
 import pinecone
 from langchain_community.vectorstores.pinecone import Pinecone
 
-from app.backend.embeddings.openai import embeddings
+from app.backend.embeddings.openai_embeddings import embeddings
 from app.backend.settings import settings
 
 # TODO: Update pinecone-client to version >=3 (currently 2.2.4)

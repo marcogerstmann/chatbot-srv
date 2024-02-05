@@ -2,7 +2,7 @@ from langchain.chains import RetrievalQA
 from langchain_openai import ChatOpenAI
 
 from app.backend.settings import settings
-from app.backend.vector_stores.pinecone import vector_store
+from app.backend.vector_stores.pinecone_vector_store import vector_store
 
 
 def answer_question(question: str) -> str:

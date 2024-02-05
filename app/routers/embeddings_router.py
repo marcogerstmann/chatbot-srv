@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from app.services.embeddings import create_embeddings
+from app.services.embeddings_services import create_embeddings
 
 router = APIRouter(prefix="/embeddings")
 

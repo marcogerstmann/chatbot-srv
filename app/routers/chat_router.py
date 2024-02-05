@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 
-from app.schemas.chat_request import ChatRequestSchema
-from app.schemas.chat_response import ChatResponseSchema
-from app.services.faq import answer_question
+from app.schemas.chat_request_schema import ChatRequestSchema
+from app.schemas.chat_response_schema import ChatResponseSchema
+from app.services.faq_service import answer_question
 
 router = APIRouter(prefix="/chat")
 
