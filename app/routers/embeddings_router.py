@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from app.services.embeddings_services import sync_embeddings
+from app.services.embeddings_service import sync_embeddings
 
 router = APIRouter(prefix="/embeddings")
 
