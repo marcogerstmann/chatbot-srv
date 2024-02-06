@@ -15,12 +15,16 @@ credentials = {
     "token_uri": "https://oauth2.googleapis.com/token"
 }
 
+google_spreadsheet_file_id = "15mpbPy9UQvnVZkWgXgSBYipHhgUC4uS7kMxZawqNvW8"
+
 
 def capture_lead(lead: LeadRequestSchema):
     gc = gspread.service_account_from_dict(credentials, scopes)
 
-    # TODO: Capture lead to google sheet
-    sh = gc.open("demo-ki-chat-agent-leads")
-    print(sh.sheet1.get('A1'))
+    sheet = gc.open_by_key(google_spreadsheet_file_id)
+    sheet.values_append("A1", {"valueInputOption": "RAW"}, {
+        # Array of arrays. Outer array: rows. Innter array: columns.
+        "values": [[lead.name, lead.address, lead.phone]]
+    })
 
     return True
