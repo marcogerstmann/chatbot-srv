@@ -6,9 +6,8 @@ from app.services.leads_service import capture_lead
 router = APIRouter(prefix="/leads")
 
 
-@router.post("/")
+@router.post("", response_model=bool)
 def post_lead(request: LeadRequestSchema) -> bool:
-    """Calculate solar potential"""
+    """Capture a lead"""
 
-    capture_lead(request)
-    return True
+    return capture_lead(request)
