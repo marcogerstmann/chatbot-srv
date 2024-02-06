@@ -39,14 +39,8 @@ def capture_lead_to_google_spreadsheet(spreadsheet_id: str, values: list[str]):
         google_service = build(
             "sheets",
             "v4",
-            credentials=Credentials.from_service_account_info({
-                "type": "service_account",
-                "private_key": settings.google_service_account_private_key,
-                "client_email": settings.google_service_account_email,
-                "token_uri": "https://oauth2.googleapis.com/token"
-            }, scopes=[
-                "https://www.googleapis.com/auth/spreadsheets"
-            ])
+            credentials=Credentials.from_service_account_file(
+                ".credentials/keys.json", scopes=["https://www.googleapis.com/auth/spreadsheets"])
         )
 
         result = (

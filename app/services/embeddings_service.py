@@ -1,6 +1,7 @@
 from langchain.text_splitter import CharacterTextSplitter
-from langchain_community.document_loaders import TextLoader
+from langchain_community.document_loaders import GoogleDriveLoader
 
+from app.backend.settings import settings
 from app.backend.vector_stores.pinecone_vector_store import vector_store
 
 
@@ -20,6 +21,11 @@ def add_file_to_vetor_store():
         chunk_size=200,
         chunk_overlap=0
     )
-    loader = TextLoader("./temp/facts.txt")
+    loader = GoogleDriveLoader(
+        service_account_key=".credentials/keys.json",
+        folder_id=settings.google_drive_base_vector_sources_folder_id,
+        recursive=True,
+        file_types=["document", "sheet", "pdf"]
+    )
     docs = loader.load_and_split(text_splitter=text_splitter)
     vector_store.add_documents(docs)

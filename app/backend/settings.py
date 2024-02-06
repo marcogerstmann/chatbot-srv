@@ -12,8 +12,7 @@ class Settings(BaseSettings):
     pinecone_env_name: str
     pinecone_index_name: str
     google_cloud_api_key: str
-    google_service_account_email: str
-    google_service_account_private_key: str
+    google_drive_base_vector_sources_folder_id: str
 
 
 settings = Settings()
