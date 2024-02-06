@@ -4,7 +4,7 @@ from langchain_community.document_loaders import TextLoader
 from app.backend.vector_stores.pinecone_vector_store import vector_store
 
 
-def create_embeddings() -> bool:
+def sync_embeddings() -> bool:
     text_splitter = CharacterTextSplitter(
         separator="\n",
         chunk_size=200,

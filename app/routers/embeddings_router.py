@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from app.services.embeddings_services import create_embeddings
+from app.services.embeddings_services import sync_embeddings
 
 router = APIRouter(prefix="/embeddings")
 
@@ -10,4 +10,4 @@ router = APIRouter(prefix="/embeddings")
 def post_embeddings() -> bool:
     """Create embeddings"""
 
-    return create_embeddings()
+    return sync_embeddings()
