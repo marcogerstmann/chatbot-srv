@@ -18,8 +18,8 @@ def clear_vector_store():
 def add_file_to_vetor_store():
     text_splitter = CharacterTextSplitter(
         separator="\n",
-        chunk_size=200,
-        chunk_overlap=0
+        chunk_size=512,
+        chunk_overlap=50
     )
     loader = GoogleDriveLoader(
         service_account_key=".credentials/keys.json",
