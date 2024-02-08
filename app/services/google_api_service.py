@@ -40,7 +40,7 @@ def capture_lead_to_google_spreadsheet(spreadsheet_id: str, values: list[str]):
             "sheets",
             "v4",
             credentials=Credentials.from_service_account_file(
-                ".credentials/keys.json", scopes=["https://www.googleapis.com/auth/spreadsheets"])
+                "google-service-account-key.json", scopes=["https://www.googleapis.com/auth/spreadsheets"])
         )
 
         result = (

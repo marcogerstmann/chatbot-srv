@@ -1,4 +1,4 @@
-from langchain.text_splitter import CharacterTextSplitter
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import GoogleDriveLoader
 
 from app.backend.settings import settings
@@ -16,13 +16,13 @@ def clear_vector_store():
 
 
 def add_documents_to_vector_store():
-    text_splitter = CharacterTextSplitter(
-        separator="\n",
+    text_splitter = RecursiveCharacterTextSplitter(
+        separators=[" ", ". ", "\n"],
         chunk_size=512,
         chunk_overlap=50
     )
     loader = GoogleDriveLoader(
-        service_account_key=".credentials/keys.json",
+        service_account_key="google-service-account-key.json",
         folder_id=settings.google_drive_base_vector_sources_folder_id,
         recursive=True,
         file_types=["document", "sheet", "pdf"]
