@@ -8,7 +8,11 @@ router = APIRouter(prefix="/solar")
 
 
 @router.post("/potential", response_model=SolarPotentialResponseSchema)
-def post_solar_potential(request: SolarPotentialRequestSchema) -> SolarPotentialResponseSchema:
+def post_solar_potential(
+    request: SolarPotentialRequestSchema,
+) -> SolarPotentialResponseSchema:
     """Calculate solar potential"""
 
-    return calculate_solar_potential(request.address, request.max_solar_panels_percentage)
+    return calculate_solar_potential(
+        request.address, request.max_solar_panels_percentage
+    )
