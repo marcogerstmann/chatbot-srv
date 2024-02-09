@@ -2,7 +2,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import GoogleDriveLoader
 
 from app.backend.settings import settings
-from app.backend.vector_stores.pinecone_vector_store import vector_store
+from app.backend.vector_stores.pgvector_vector_store_base import vector_store_base
 
 
 def sync_embeddings() -> bool:
@@ -12,7 +12,8 @@ def sync_embeddings() -> bool:
 
 
 def clear_vector_store():
-    vector_store.delete(delete_all=True)
+    vector_store_base.delete_collection()
+    vector_store_base.create_collection()
 
 
 def add_documents_to_vector_store():
@@ -26,4 +27,4 @@ def add_documents_to_vector_store():
         file_types=["document", "sheet", "pdf"],
     )
     docs = loader.load_and_split(text_splitter=text_splitter)
-    vector_store.add_documents(docs)
+    vector_store_base.add_documents(docs)
