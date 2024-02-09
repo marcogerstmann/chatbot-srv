@@ -1,6 +1,6 @@
 import math
 
-from app.constants import DC_TO_AC_RATE, AVG_COST_PER_KWH
+from app.constants import AVG_COST_PER_KWH, DC_TO_AC_RATE
 from app.schemas.google_solar_building_insights_response_schema import (
     GoogleSolarPanelConfig,
 )

@@ -6,8 +6,8 @@ from googleapiclient.errors import HttpError
 from app.backend.settings import settings
 from app.constants import MIN_SOLAR_API_IMAGE_QUALITY
 from app.schemas.google_geocoding_result_schema import (
-    GoogleGeocodingResultsSchema,
     GoogleGeocodingLocationSchema,
+    GoogleGeocodingResultsSchema,
 )
 from app.schemas.google_solar_building_insights_response_schema import (
     GoogleSolarBuildingInsightResponseSchema,

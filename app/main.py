@@ -1,12 +1,12 @@
 from fastapi import FastAPI
 
-from app.constants import OPEN_API_TITLE, OPEN_API_DESCRIPTION
+from app.constants import OPEN_API_DESCRIPTION, OPEN_API_TITLE
 from app.routers import (
     chat_router,
-    info_router,
     embeddings_router,
-    solar_router,
+    info_router,
     leads_router,
+    solar_router,
 )
 
 app = FastAPI(title=OPEN_API_TITLE, description=OPEN_API_DESCRIPTION)
