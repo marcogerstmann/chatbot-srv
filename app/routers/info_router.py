@@ -3,7 +3,7 @@ from fastapi import APIRouter
 router = APIRouter(prefix="/info")
 
 
-@router.get("/")
+@router.get("")
 def get_info():
     """Get info"""
 
