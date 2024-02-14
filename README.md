@@ -1,4 +1,4 @@
-# Solar Chatbot Service
+# Chatbot Service
 
 ## Initialize project
 

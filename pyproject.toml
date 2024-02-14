@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "solar-chatbot-srv"
+name = "chatbot-srv"
 version = "0.1.0"
 description = ""
 authors = ["Marco Gerstmann <mail@marcogerstmann.com>"]
