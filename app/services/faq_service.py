@@ -1,7 +1,15 @@
-from langchain.chains import RetrievalQA
+from langchain.chains import ConversationChain, RetrievalQA
 
 from app.backend.llms.chatopenai import chat
 from app.backend.vector_stores.pgvector_vector_store_base import vector_store_base
+
+
+def answer_simple_chat(question: str) -> str:
+    chain = ConversationChain(llm=chat)
+
+    output = chain.predict(input=question)
+
+    return output
 
 
 def answer_question(question: str) -> str:
