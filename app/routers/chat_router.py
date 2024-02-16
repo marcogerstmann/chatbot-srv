@@ -11,7 +11,7 @@ router = APIRouter(prefix="/chat")
 def simple_chat(request: ChatRequestSchema) -> ChatResponseSchema:
     """Handle conversation prompt"""
 
-    answer = handle_conversation_prompt(request.input)
+    answer = handle_conversation_prompt(request.input, request.session_id)
     return ChatResponseSchema(output=answer)
 
 

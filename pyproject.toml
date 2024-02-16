@@ -21,6 +21,7 @@ google-auth-httplib2 = "^0.2.0"
 google-auth-oauthlib = "^1.2.0"
 pgvector = "^0.2.5"
 psycopg2-binary = "^2.9.9"
+psycopg = {extras = ["binary"], version = "^3.1.18"}
 
 
 [build-system]
