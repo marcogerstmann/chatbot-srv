@@ -3,7 +3,7 @@ from google.oauth2.service_account import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-from app.backend.settings import settings
+from app.backend.config import config
 from app.constants import MIN_SOLAR_API_IMAGE_QUALITY
 from app.schemas.google_geocoding_result_schema import (
     GoogleGeocodingLocationSchema,
@@ -20,7 +20,7 @@ def get_coordinates(address: str) -> GoogleGeocodingLocationSchema:
     response = requests.get(
         "https://maps.googleapis.com/maps/api/geocode/json"
         f"?address={address}"
-        f"&key={settings.google_cloud_api_key}"
+        f"&key={config.google_cloud_api_key}"
     )
     location = (
         GoogleGeocodingResultsSchema.model_validate(response.json())
@@ -41,7 +41,7 @@ def get_solar_building_insights(
         f"?location.latitude={coordinates.lat}"
         f"&location.longitude={coordinates.lng}"
         f"&requiredQuality={MIN_SOLAR_API_IMAGE_QUALITY}"
-        f"&key={settings.google_cloud_api_key}"
+        f"&key={config.google_cloud_api_key}"
     )
     return GoogleSolarBuildingInsightResponseSchema.model_validate(response.json())
 
