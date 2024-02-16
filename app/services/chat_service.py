@@ -8,9 +8,7 @@ from app.backend.chat.vector_stores.pgvector_vector_store_base import vector_sto
 def handle_conversation_prompt(prompt: str, session_id: str) -> str:
     chain = ConversationChain(llm=chat, verbose=True, memory=build_memory(session_id))
 
-    output = chain.predict(input=prompt)
-
-    return output
+    return chain.predict(input=prompt)
 
 
 def handle_faq_question(question: str) -> str:

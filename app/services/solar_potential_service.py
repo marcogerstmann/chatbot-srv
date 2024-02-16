@@ -43,7 +43,7 @@ def enrich_solar_panel_configs(solar_panel_configs):
 
 
 def find_solar_panel_config_closest_to_max_panels(
-    solar_panel_configs: [GoogleSolarPanelConfig],
+    solar_panel_configs: list[GoogleSolarPanelConfig],
     max_panels_count: int,
     max_solar_panels_percentage: float,
 ) -> GoogleSolarPanelConfig:
