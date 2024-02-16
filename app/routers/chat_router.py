@@ -1,4 +1,6 @@
-from fastapi import APIRouter
+from typing import Annotated
+
+from fastapi import APIRouter, Header
 
 from app.schemas.chat_request_schema import ChatRequestSchema
 from app.schemas.chat_response_schema import ChatResponseSchema
@@ -8,10 +10,13 @@ router = APIRouter(prefix="/chat")
 
 
 @router.post("", response_model=ChatResponseSchema)
-def simple_chat(request: ChatRequestSchema) -> ChatResponseSchema:
+def simple_chat(
+    request: ChatRequestSchema, x_session_id: Annotated[str, Header()]
+) -> ChatResponseSchema:
     """Handle conversation prompt"""
+    print(request)
 
-    answer = handle_conversation_prompt(request.input, request.session_id)
+    answer = handle_conversation_prompt(request.input, x_session_id)
     return ChatResponseSchema(output=answer)
 
 
