@@ -20,6 +20,8 @@ google-auth-oauthlib = "^1.2.0"
 pgvector = "^0.2.5"
 psycopg = {extras = ["binary"], version = "^3.1.18"}
 psycopg2-binary = "^2.9.9"
+sqlalchemy = "^2.0.27"
+asyncpg = "^0.29.0"
 
 
 [build-system]
