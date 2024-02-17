@@ -22,7 +22,7 @@ def add_documents_to_vector_store():
     )
     loader = GoogleDriveLoader(
         service_account_key="google-service-account-key.json",
-        folder_id=config.google_drive_base_vector_sources_folder_id,
+        folder_id=config.google_drive_vector_sources_folder_id,
         recursive=True,
         file_types=["document", "sheet", "pdf"],
     )
