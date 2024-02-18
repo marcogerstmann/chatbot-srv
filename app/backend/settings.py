@@ -1,7 +1,9 @@
+from functools import lru_cache
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-class Config(BaseSettings):
+class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", case_sensitive=False)
 
     openai_api_key: str
@@ -10,4 +12,6 @@ class Config(BaseSettings):
     postgres_connection_string_async: str
 
 
-config = Config()
+@lru_cache
+def get_settings():
+    return Settings()

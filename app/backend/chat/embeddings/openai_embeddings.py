@@ -1,5 +1,5 @@
 from langchain_openai import OpenAIEmbeddings
 
-from app.backend.config import config
+from app.backend.settings import get_settings
 
-embeddings = OpenAIEmbeddings(openai_api_key=config.openai_api_key)
+embeddings = OpenAIEmbeddings(openai_api_key=get_settings().openai_api_key)

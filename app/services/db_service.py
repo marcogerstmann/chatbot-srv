@@ -1,13 +1,16 @@
+from typing import Annotated
+
+from fastapi import Depends
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import GoogleDriveLoader
 
 from app.backend.chat.vector_stores.pgvector_vector_store_base import vector_store
-from app.backend.config import config
+from app.backend.settings import Settings, get_settings
 
 
 class DbService:
-    def __init__(self):
-        pass
+    def __init__(self, settings: Annotated[Settings, Depends(get_settings)]):
+        self.settings = settings
 
     def sync_embeddings(self) -> bool:
         self.__clear_vector_store()
@@ -24,7 +27,7 @@ class DbService:
         )
         loader = GoogleDriveLoader(
             service_account_key="google-service-account-key.json",
-            folder_id=config.google_drive_vector_sources_folder_id,
+            folder_id=self.settings.google_drive_vector_sources_folder_id,
             recursive=True,
             file_types=["document", "sheet", "pdf"],
         )

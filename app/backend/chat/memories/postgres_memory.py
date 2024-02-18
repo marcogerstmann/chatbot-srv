@@ -1,11 +1,12 @@
 from langchain.memory import ConversationBufferMemory, PostgresChatMessageHistory
 
-from app.backend.config import config
+from app.backend.settings import get_settings
 
 
 def build_memory(session_id: str):
     return ConversationBufferMemory(
         chat_memory=PostgresChatMessageHistory(
-            connection_string=config.postgres_connection_string, session_id=session_id
+            connection_string=get_settings().postgres_connection_string,
+            session_id=session_id,
         )
     )
