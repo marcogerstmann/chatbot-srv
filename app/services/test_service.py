@@ -3,9 +3,6 @@ from typing import Annotated
 
 from fastapi import Depends
 
-from app.backend.db.dependencies import get_repository
-from app.backend.db.models.customer import Customer
-from app.backend.db.repository import DatabaseRepository
 from app.repositories.customer_repository import CustomerRepository
 
 
