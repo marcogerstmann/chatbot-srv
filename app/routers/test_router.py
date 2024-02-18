@@ -3,25 +3,17 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends
 
-from app.backend.db.dependencies import get_repository
-from app.backend.db.models.customer import Customer
-from app.backend.db.repository import DatabaseRepository
+from app.services.test_service import TestService
 
 router = APIRouter(prefix="/test")
 
 # TODO: Delete the test endpoints
 
-CustomerRepository = Annotated[
-    DatabaseRepository[Customer],
-    Depends(get_repository(Customer)),
-]
-
 
 @router.get("/customers/{id}")
 async def test(
-    id: uuid.UUID,
-    repository: CustomerRepository,  # TODO: Move the dependency injection to service level
+    id: uuid.UUID, test_service: Annotated[TestService, Depends(TestService)]
 ):
-    customer = await repository.get(id)
+    customer = await test_service.get_customer(id)
     print(customer.name)
     pass
