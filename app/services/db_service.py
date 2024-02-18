@@ -11,11 +11,6 @@ class DbService:
     def __init__(self):
         pass
 
-    def migrate_tables(self) -> bool:
-        engine = create_engine(config.postgres_connection_string)
-        Base.metadata.create_all(engine)
-        return True
-
     def sync_embeddings(self) -> bool:
         self.__clear_vector_store()
         self.__add_documents_to_vector_store()
