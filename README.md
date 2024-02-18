@@ -12,13 +12,19 @@ poetry install --no-root
 
 Add all variables to a `.env` file in UPPERCASE that are present as variables in `config.py`.
 
-### 3. Run database migrations
+### 3. Spin up dockerized services
+
+```sh
+docker-compose up -d
+```
+
+### 4. Run database migrations
 
 ```sh
 alembic upgrade head
 ```
 
-### 4. Run app
+### 5. Run app
 
 ```sh
 uvicorn app.main:app --reload
