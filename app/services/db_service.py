@@ -1,10 +1,8 @@
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import GoogleDriveLoader
-from sqlalchemy import create_engine
 
 from app.backend.chat.vector_stores.pgvector_vector_store_base import vector_store
 from app.backend.config import config
-from app.backend.db.models.base import Base
 
 
 class DbService:
