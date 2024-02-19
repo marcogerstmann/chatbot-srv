@@ -13,5 +13,5 @@ class TestService:
     ):
         self.customer_repository = customer_repository
 
-    async def get_customer(self, id: uuid.UUID):
-        return await self.customer_repository.get(id)
+    def get_customer(self, id: uuid.UUID):
+        return self.customer_repository.get(id)

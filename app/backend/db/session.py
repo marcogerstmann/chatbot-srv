@@ -1,23 +1,15 @@
-from collections.abc import AsyncGenerator
-
-from sqlalchemy import exc
-from sqlalchemy.ext.asyncio import (
-    AsyncSession,
-    async_sessionmaker,
-    create_async_engine,
-)
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 from app.backend.settings import get_settings
 
+engine = create_engine(get_settings().postgres_connection_string, pool_pre_ping=True)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-async def get_db_session() -> AsyncGenerator[AsyncSession, None]:
-    engine = create_async_engine(get_settings().postgres_connection_string_async)
-    factory = async_sessionmaker(engine)
-    async with factory() as session:
-        try:
-            yield session
-            await session.commit()
-        except exc.SQLAlchemyError as error:
-            print(f"SQLAlchemy error: {error}")  # TODO: Use logger
-            await session.rollback()
-            raise
+
+def get_db_session():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
