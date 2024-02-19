@@ -2,7 +2,7 @@ from typing import Final
 
 # Custom http headers
 HTTP_HEADER_SESSION_ID: Final = "x-session-id"
-HTTP_HEADER_CUSTOMER_ID: Final = "x-customer-id"
+HTTP_HEADER_CHATBOT_ID: Final = "x-chatbot-id"
 
 # Open API
 OPEN_API_TITLE: Final = '"hi ai" Chatbot Service'

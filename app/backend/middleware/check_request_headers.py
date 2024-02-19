@@ -1,7 +1,7 @@
 from fastapi import HTTPException, Request, status
 from fastapi.responses import JSONResponse
 
-from app.constants import HTTP_HEADER_CUSTOMER_ID, HTTP_HEADER_SESSION_ID
+from app.constants import HTTP_HEADER_CHATBOT_ID, HTTP_HEADER_SESSION_ID
 
 
 async def check_request_headers(request: Request, call_next):
@@ -12,7 +12,7 @@ async def check_request_headers(request: Request, call_next):
 
         if request.url.path.startswith("/public"):
             await verify_session_id(request)
-            await verify_customer_id(request)
+            await verify_chatbot_id(request)
 
         return await call_next(request)
     except HTTPException as ex:
@@ -30,11 +30,11 @@ async def verify_session_id(request: Request):
         )
 
 
-async def verify_customer_id(request: Request):
-    customer_id = request.headers.get(HTTP_HEADER_CUSTOMER_ID)
+async def verify_chatbot_id(request: Request):
+    customer_id = request.headers.get(HTTP_HEADER_CHATBOT_ID)
     # TODO: Also check if customer exists in database
     if customer_id is None or not customer_id.strip():
         raise HTTPException(
-            detail=f"Invalid or missing header {HTTP_HEADER_CUSTOMER_ID}",
+            detail=f"Invalid or missing header {HTTP_HEADER_CHATBOT_ID}",
             status_code=status.HTTP_400_BAD_REQUEST,
         )
