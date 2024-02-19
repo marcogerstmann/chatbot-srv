@@ -11,8 +11,8 @@ async def check_request_headers(request: Request, call_next):
             print("Admin endpoint called")
 
         if request.url.path.startswith("/public"):
-            await verify_session_id(request)
-            await verify_chatbot_id(request)
+            await ensure_request_header(request, HTTP_HEADER_CHATBOT_ID)
+            await ensure_request_header(request, HTTP_HEADER_SESSION_ID)
 
         return await call_next(request)
     except HTTPException as ex:
@@ -21,20 +21,10 @@ async def check_request_headers(request: Request, call_next):
         )
 
 
-async def verify_session_id(request: Request):
-    session_id = request.headers.get(HTTP_HEADER_SESSION_ID)
-    if session_id is None or not session_id.strip():
-        raise HTTPException(
-            detail=f"Invalid or missing header {HTTP_HEADER_SESSION_ID}",
-            status_code=status.HTTP_400_BAD_REQUEST,
-        )
-
-
-async def verify_chatbot_id(request: Request):
-    customer_id = request.headers.get(HTTP_HEADER_CHATBOT_ID)
-    # TODO: Also check if customer exists in database
+async def ensure_request_header(request: Request, header: str):
+    customer_id = request.headers.get(header)
     if customer_id is None or not customer_id.strip():
         raise HTTPException(
-            detail=f"Invalid or missing header {HTTP_HEADER_CHATBOT_ID}",
+            detail=f"Invalid or missing header {header}",
             status_code=status.HTTP_400_BAD_REQUEST,
         )
