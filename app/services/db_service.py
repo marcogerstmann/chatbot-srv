@@ -1,3 +1,4 @@
+import uuid
 from typing import Annotated
 
 import bs4
@@ -5,7 +6,9 @@ from fastapi import Depends
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import GoogleDriveLoader, WebBaseLoader
 
-from app.backend.chat.vector_stores.pgvector_vector_store_base import vector_store
+from app.backend.chat.vector_stores.pgvector_vector_store import (
+    build_vector_store_from_chatbot_id,
+)
 from app.backend.settings import Settings, get_settings
 
 
@@ -13,7 +16,8 @@ class DbService:
     def __init__(self, settings: Annotated[Settings, Depends(get_settings)]):
         self.settings = settings
 
-    def sync_embeddings(self) -> bool:
+    def sync_embeddings(self, chatbot_id: uuid.UUID) -> bool:
+        self.vector_store = build_vector_store_from_chatbot_id(chatbot_id)
         # self.__clear_vector_store()
         # self.__add_documents_to_vector_store()
         self.testWebLoading()
@@ -31,11 +35,11 @@ class DbService:
         )
         docs = loader.load()  # TODO: Use loader.load_and_split() instead?
         print(docs)
-        # vector_store.add_documents(docs)
+        self.vector_store.add_documents(docs)
 
     def __clear_vector_store(self):
-        vector_store.delete_collection()
-        vector_store.create_collection()
+        self.vector_store.delete_collection()
+        self.vector_store.create_collection()
 
     def __add_documents_to_vector_store(self):
         text_splitter = RecursiveCharacterTextSplitter(
@@ -48,4 +52,4 @@ class DbService:
             file_types=["document", "sheet", "pdf"],
         )
         docs = loader.load_and_split(text_splitter=text_splitter)
-        vector_store.add_documents(docs)
+        self.vector_store.add_documents(docs)

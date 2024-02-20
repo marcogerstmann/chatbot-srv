@@ -1,3 +1,4 @@
+import uuid
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, Header
@@ -24,9 +25,10 @@ def simple_chat(
 @router.post("/faq", response_model=ChatResponseSchema)
 def faq_question(
     request: ChatRequestSchema,
+    x_chatbot_id: Annotated[uuid.UUID, Header()],
     chat_service: Annotated[ChatService, Depends(ChatService)],
 ) -> ChatResponseSchema:
     """Handle FAQ chat message"""
 
-    answer = chat_service.handle_faq_question(request.input)
+    answer = chat_service.handle_faq_question(x_chatbot_id, request.input)
     return ChatResponseSchema(output=answer)

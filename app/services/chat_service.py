@@ -1,8 +1,12 @@
+import uuid
+
 from langchain.chains import ConversationChain, RetrievalQA
 
 from app.backend.chat.llms.chatopenai import chat
 from app.backend.chat.memories.postgres_memory import build_memory
-from app.backend.chat.vector_stores.pgvector_vector_store_base import vector_store
+from app.backend.chat.vector_stores.pgvector_vector_store import (
+    build_vector_store_from_chatbot_id,
+)
 
 
 class ChatService:
@@ -15,8 +19,9 @@ class ChatService:
         )
         return chain.predict(input=prompt)
 
-    def handle_faq_question(self, question: str) -> str:
+    def handle_faq_question(self, chatbot_id: uuid.UUID, question: str) -> str:
         # TODO: Use ConversationalRetrievalChain instead of RetrievalQA to have memory
+        vector_store = build_vector_store_from_chatbot_id(chatbot_id)
         chain = RetrievalQA.from_chain_type(
             llm=chat, retriever=vector_store.as_retriever(), chain_type="stuff"
         )
