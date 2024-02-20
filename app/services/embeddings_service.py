@@ -14,7 +14,7 @@ from app.backend.settings import Settings, get_settings
 from app.repositories.chatbot_repository import ChatbotRepository
 
 
-class DbService:
+class EmbeddingsService:
     def __init__(
         self,
         settings: Annotated[Settings, Depends(get_settings)],
