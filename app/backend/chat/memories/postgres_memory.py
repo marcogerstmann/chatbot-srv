@@ -8,5 +8,8 @@ def build_memory(session_id: str):
         chat_memory=PostgresChatMessageHistory(
             connection_string=get_settings().postgres_connection_string,
             session_id=session_id,
-        )
+        ),
+        return_messages=True,
+        memory_key="chat_history",
+        output_key="answer",
     )
