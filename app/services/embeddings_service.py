@@ -3,7 +3,8 @@ from typing import Annotated
 
 import bs4
 from fastapi import Depends
-from langchain_community.document_loaders import WebBaseLoader
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_community.document_loaders import GoogleDriveLoader, WebBaseLoader
 from langchain_community.vectorstores import VectorStore
 
 from app.backend.chat.vector_stores.pgvector_vector_store import (
@@ -11,6 +12,7 @@ from app.backend.chat.vector_stores.pgvector_vector_store import (
 )
 from app.backend.db.models import Chatbot
 from app.backend.settings import Settings, get_settings
+from app.constants import CHATBOT_AVA_ID
 from app.repositories.chatbot_repository import ChatbotRepository
 
 
@@ -40,12 +42,17 @@ class EmbeddingsService:
         vector_store.create_collection()
 
     def __load_docs(self, chatbot: Chatbot):
+        if chatbot.id == CHATBOT_AVA_ID:
+            return self.__load_docs_ava()
+
+        return self.__load_docs_web_scraping(chatbot)
+
+    def __load_docs_web_scraping(self, chatbot: Chatbot):
         loader = WebBaseLoader(
             web_paths=(
                 vecor_scrape_url.url for vecor_scrape_url in chatbot.vector_scrape_urls
             ),
             bs_kwargs=dict(
-                # TODO: Move as setting to database
                 parse_only=bs4.SoupStrainer(
                     class_=(chatbot.vector_product_description_html_class)
                 )
@@ -53,22 +60,14 @@ class EmbeddingsService:
         )
         return loader.load()  # TODO: Use loader.load_and_split() instead?
 
-
-# TODO: Delete this or keep as an example for using Google Drive as the source?
-# def sync_embeddings_gdrive(self) -> bool:
-#     self.__clear_vector_store()
-#     self.__add_documents_to_vector_store()
-#     return True
-
-# def __add_documents_to_vector_store(self, vector_store: VectorStore):
-#     text_splitter = RecursiveCharacterTextSplitter(
-#         separators=[" ", ". ", "\n"], chunk_size=512, chunk_overlap=50
-#     )
-#     loader = GoogleDriveLoader(
-#         service_account_key="google-service-account-key.json",
-#         folder_id=self.settings.google_drive_vector_sources_folder_id,
-#         recursive=True,
-#         file_types=["document", "sheet", "pdf"],
-#     )
-#     docs = loader.load_and_split(text_splitter=text_splitter)
-#     vector_store.add_documents(docs)
+    def __load_docs_ava(self):
+        text_splitter = RecursiveCharacterTextSplitter(
+            separators=[" ", ". ", "\n"], chunk_size=512, chunk_overlap=50
+        )
+        loader = GoogleDriveLoader(
+            service_account_key="google-service-account-key.json",
+            folder_id=self.settings.google_drive_vector_sources_ava_folder_id,
+            recursive=True,
+            file_types=["document", "sheet", "pdf"],
+        )
+        return loader.load_and_split(text_splitter=text_splitter)
