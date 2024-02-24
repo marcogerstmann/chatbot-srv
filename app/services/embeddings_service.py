@@ -62,7 +62,7 @@ class EmbeddingsService:
 
     def __load_docs_ava(self):
         text_splitter = RecursiveCharacterTextSplitter(
-            separators=[" ", ". ", "\n"], chunk_size=512, chunk_overlap=50
+            separators=["\n", ". "], chunk_size=512, chunk_overlap=50
         )
         loader = GoogleDriveLoader(
             service_account_key="google-service-account-key.json",
