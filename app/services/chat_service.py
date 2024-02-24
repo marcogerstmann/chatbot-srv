@@ -13,7 +13,7 @@ class ChatService:
     def __init__(self):
         pass
 
-    def handle_faq_question(
+    def handle_knowledge_base_message(
         self, chatbot_id: uuid.UUID, session_id: str, question: str
     ) -> str:
         vector_store = build_vector_store_from_chatbot_id(chatbot_id)
