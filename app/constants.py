@@ -11,3 +11,8 @@ OPEN_API_DESCRIPTION: Final = 'API and backend for "hi ai" chatbots.'
 
 # Internal or special chatbots
 CHATBOT_AVA_ID: Final = uuid.UUID("35bdc802-495e-4fc6-8ca6-fb176c08a777")
+
+# Misc
+QUESTIONS_WITHOUT_ANSWER_GOOGLE_SHEET: Final = (
+    "1YBlm3ferbfj7Hy0jB5DN9A7xgHENHcBWQDX3pjQVnJ8"
+)

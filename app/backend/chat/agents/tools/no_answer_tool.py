@@ -1,7 +1,11 @@
+from datetime import datetime
 from typing import Type
 
 from langchain.agents.tools import BaseTool
 from pydantic import BaseModel, Field
+
+from app.constants import QUESTIONS_WITHOUT_ANSWER_GOOGLE_SHEET
+from app.services.google_api_service import add_as_row_to_google_spreadsheet
 
 
 class NoAnswerInput(BaseModel):
@@ -20,8 +24,10 @@ class NoAnswerTool(BaseTool):
     #     self.return_direct = True
 
     def _run(self, question: str):
-        # TODO: Implement
         print(
-            f"Assistant didn't know the answer to this question: {question}"
+            f'Assistant didn\'t know the answer to this question: "{question}"'
         )  # TODO: Use logger
-        # return "Das weiß ich leider nicht."
+        spreadsheet_id = QUESTIONS_WITHOUT_ANSWER_GOOGLE_SHEET
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M")
+        values = [timestamp, question]
+        add_as_row_to_google_spreadsheet(spreadsheet_id, values)
