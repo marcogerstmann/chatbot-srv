@@ -21,5 +21,7 @@ class NoAnswerTool(BaseTool):
 
     def _run(self, question: str):
         # TODO: Implement
-        print(f"To be implemented: {question}")
-        return "Das weiß ich leider nicht."
+        print(
+            f"Assistant didn't know the answer to this question: {question}"
+        )  # TODO: Use logger
+        # return "Das weiß ich leider nicht."
