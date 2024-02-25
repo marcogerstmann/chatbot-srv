@@ -24,6 +24,7 @@ class Chatbot(Base):
     name: Mapped[str] = mapped_column(nullable=True)
     customer_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("customer.id"))
     customer: Mapped["Customer"] = relationship(back_populates="chatbots")
+    system_prompt: Mapped[str] = mapped_column(nullable=True)
     vector_scrape_urls: Mapped[list["ChatbotVectorScrapeUrl"]] = relationship(
         back_populates="chatbot"
     )

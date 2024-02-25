@@ -1,27 +1,24 @@
-import uuid
+from typing import Annotated
 
-from langchain.chains import ConversationalRetrievalChain
+from fastapi import Depends
 
-from app.backend.chat.llms.chatopenai import llm
-from app.backend.chat.memories.postgres_memory import build_memory
-from app.backend.chat.vector_stores.pgvector_vector_store import (
-    build_vector_store_from_chatbot_id,
-)
+from app.backend.chat.agents.knowledge_base_agent import build_agent_executor
+from app.repositories.chatbot_repository import ChatbotRepository
 
 
 class ChatService:
-    def __init__(self):
-        pass
+    def __init__(
+        self,
+        chatbot_repository: Annotated[ChatbotRepository, Depends(ChatbotRepository)],
+    ):
+        self.chatbot_repository = chatbot_repository
 
-    def handle_knowledge_base_message(
-        self, chatbot_id: uuid.UUID, session_id: str, question: str
+    def handle_knowledge_base_message_as_agent(
+        self, chatbot_id: str, session_id: str, question: str
     ) -> str:
-        vector_store = build_vector_store_from_chatbot_id(chatbot_id)
-        chain = ConversationalRetrievalChain.from_llm(
-            llm=llm,
-            retriever=vector_store.as_retriever(),
-            memory=build_memory(session_id),
-            verbose=True,
+        chatbot = self.chatbot_repository.get(chatbot_id)
+        agent_executor = build_agent_executor(
+            session_id=session_id, system_prompt=chatbot.system_prompt
         )
-        result = chain.invoke({"question": question})
-        return result["answer"]
+        result = agent_executor.invoke({"input": question})
+        return result["output"]

@@ -10,6 +10,4 @@ def build_memory(session_id: str):
             session_id=session_id,
         ),
         return_messages=True,
-        memory_key="chat_history",
-        output_key="answer",
     )
