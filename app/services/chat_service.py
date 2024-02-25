@@ -13,7 +13,7 @@ class ChatService:
     ):
         self.chatbot_repository = chatbot_repository
 
-    def handle_knowledge_base_message_as_agent(
+    def handle_knowledge_base_message(
         self, chatbot_id: str, session_id: str, question: str
     ) -> str:
         chatbot = self.chatbot_repository.get(chatbot_id)
