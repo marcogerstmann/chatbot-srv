@@ -12,6 +12,7 @@ from app.backend.chat.vector_stores.pgvector_vector_store import (
 )
 from app.backend.db.models import Chatbot
 from app.backend.settings import Settings, get_settings
+from app.backend.util.logging import logger
 from app.constants import CHATBOT_AVA_ID
 from app.repositories.chatbot_repository import ChatbotRepository
 
@@ -34,7 +35,7 @@ class EmbeddingsService:
             vector_store.add_documents(docs)
         else:
             # TODO: Handle error case
-            print(f"Chatbot not found with id: {chatbot_id}")
+            logger.info(f"Chatbot not found with id: {chatbot_id}")
         return True
 
     def __clear_vector_store(self, vector_store: VectorStore):
@@ -58,7 +59,7 @@ class EmbeddingsService:
                 )
             ),
         )
-        return loader.load()  # TODO: Use loader.load_and_split() instead?
+        return loader.load()
 
     def __load_docs_ava(self):
         text_splitter = RecursiveCharacterTextSplitter(

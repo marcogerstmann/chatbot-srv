@@ -1,6 +1,7 @@
 from fastapi import HTTPException, Request, status
 from fastapi.responses import JSONResponse
 
+from app.backend.util.logging import logger
 from app.constants import HTTP_HEADER_CHATBOT_ID, HTTP_HEADER_SESSION_ID
 
 
@@ -8,7 +9,7 @@ async def check_request_headers(request: Request, call_next):
     try:
         if request.url.path.startswith("/admin"):
             # TODO: Protect admin endpoints
-            print("Admin endpoint called")
+            logger.info("Admin endpoint called")
 
         if request.url.path.startswith("/public"):
             await ensure_request_header(request, HTTP_HEADER_CHATBOT_ID)
