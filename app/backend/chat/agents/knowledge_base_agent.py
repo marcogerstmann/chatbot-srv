@@ -17,7 +17,7 @@ from app.constants import CHATBOT_AVA_ID
 # TODO: Should build the retriever based on a chatbot_id passed as a function parameter
 @tool
 def get_context_to_answer_user_question_tool(query: str):
-    """Get the relevant context from the database to answer the users question."""
+    """ALWAYS get the relevant context from this database before answering the users question."""
     retriever = build_vector_store_from_chatbot_id(CHATBOT_AVA_ID).as_retriever()
     docs = retriever.get_relevant_documents(query)
     return docs
