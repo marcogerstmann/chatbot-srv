@@ -19,9 +19,6 @@ def handle_knowledge_base_message(
 ) -> ChatResponseSchema:
     """Handle a knowledge base chat message"""
 
-    # answer = chat_service.handle_knowledge_base_message(
-    #     x_chatbot_id, x_session_id, request.input
-    # )
     answer = chat_service.handle_knowledge_base_message_as_agent(
         x_chatbot_id, x_session_id, request.input
     )
