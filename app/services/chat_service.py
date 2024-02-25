@@ -18,7 +18,8 @@ class ChatService:
     ) -> str:
         chatbot = self.chatbot_repository.get(chatbot_id)
         agent_executor = build_agent_executor(
-            session_id=session_id, system_prompt=chatbot.system_prompt
+            chatbot=chatbot,
+            session_id=session_id,
         )
         result = agent_executor.invoke({"input": question})
         return result["output"]
