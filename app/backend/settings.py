@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     openai_api_key: str
     google_drive_vector_sources_ava_folder_id: str
     postgres_connection_string: str
+    admin_api_key: str
 
 
 @lru_cache
